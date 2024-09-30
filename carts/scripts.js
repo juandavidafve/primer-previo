@@ -43,7 +43,7 @@ async function getProduct(id, quantity) {
 
 async function getCarts() {
   const resultsElem = document.querySelector("#carts");
-  const req = await fetch("https://fakestoreapi.com/carts/user/2");
+  const req = await fetch("https://fakestoreapi.com/carts/");
   const data = await req.json();
 
   resultsElem.innerHTML = data
