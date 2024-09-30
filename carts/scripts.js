@@ -2,69 +2,61 @@ function getUrlParams() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
-  let category = urlParams.get("category");
+  let id = urlParams.get("id");
 
-  if (category === "null") {
-    category = null;
+  if (id === "null") {
+    id = null;
   }
 
   return {
-    category,
+    id,
   };
 }
 
-async function getResults() {
-  const { category } = getUrlParams();
+async function getCart(id) {
+  const req = await fetch(`https://fakestoreapi.com/carts/id/${id}`);
+  const cart = await req.json();
+  const resultsElem = document.querySelector("#products");
 
-  let url = "https://fakestoreapi.com/products/";
+  resultsElem.innerHTML = cart.products
+    .map((product) => {
+      return `
+        <tr>
+          <td>${product.price}</td>
+          <td>${product.quantity}</td>
+          <td><a href="?id=${product.price}">Ver</a></td>
+        </tr>
+      `;
+    })
+    .join("");
+}
 
-  if (category) {
-    url = `https://fakestoreapi.com/products/category/${category}`;
-  }
-
-  const resultsElem = document.querySelector("#results");
-  const req = await fetch(url);
+async function getCarts() {
+  const resultsElem = document.querySelector("#carts");
+  const req = await fetch("https://fakestoreapi.com/carts/user/2");
   const data = await req.json();
 
   resultsElem.innerHTML = data
-    .map((product) => {
+    .map((cart) => {
       return `
-          <div class="card">
-            <img class="card__img" src="${product.image}">
-            <h2 class="card__title">${product.title}</h2>
-            <p class="card__price">${product.price}</p>
-            <button onclick="addProduct(${product.id})">Agregar</button>
-          </div>
+          <tr>
+            <td>${cart.id}</td>
+            <td>${cart.date}</td>
+            <td><a href="?id=${cart.id}">Ver</a></td>
+          </tr>
         `;
     })
     .join("");
 }
 
-async function addProduct(id) {
-  try {
-    const req = await fetch("https://fakestoreapi.com/carts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: 5,
-        date: new Date(),
-        products: [
-          { productId: 5, quantity: 1 },
-          { productId: 1, quantity: 5 },
-        ],
-      }),
-    });
-
-    const data = await req.json();
-
-    alert("Producto Agregado");
-  } catch (err) {
-    alert("No se ha podido agregar el producto");
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  getResults();
+  const { id } = getUrlParams();
+
+  if (id) {
+    document.querySelector("#all-carts").classList.add("hidden");
+    getCart(id);
+  } else {
+    document.querySelector("#cart-details").classList.add("hidden");
+    getCarts();
+  }
 });

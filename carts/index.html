@@ -3,15 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shop Online</title>
+    <title>Carts</title>
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="header">
-      <img class="header__logo" />
+      <p class="header__logo">Tienda</p>
       <nav class="header__links">
-        <a href="../carritos">
+        <span>Bienvenido</span>
+        <a href="../carts">
           <img />
           Carrito
         </a>
@@ -23,20 +24,29 @@
     </header>
 
     <main class="main">
-      <div>
-        <input />
-        <button>Buscar</button>
+      <div id="all-carts">
+        <h1>Relación de Pedidos</h1>
+        <table>
+          <thead>
+            <th>Número</th>
+            <th>Fecha de Solicitud</th>
+            <th>Acciones</th>
+          </thead>
+          <tbody id="carts"></tbody>
+        </table>
       </div>
 
-      <h1>Productos</h1>
-      <nav class="categories">
-        <a href="?category=electronics">Electronics</a>
-        <a href="?category=jewelery">Jewelery</a>
-        <a href="?category=men's clothing">Men's Clothing</a>
-        <a href="?category=women's clothing">Women's Clothing</a>
-      </nav>
-
-      <div id="results" class="results"></div>
+      <div id="cart-details">
+        <h1>Relación de Productos</h1>
+        <table>
+          <thead>
+            <th>Número</th>
+            <th>Fecha de Solicitud</th>
+            <th>Acciones</th>
+          </thead>
+          <tbody id="products"></tbody>
+        </table>
+      </div>
     </main>
     <script src="./scripts.js"></script>
   </body>

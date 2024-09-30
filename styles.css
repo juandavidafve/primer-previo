@@ -129,3 +129,13 @@ tr:nth-child(odd) {
     align-items: center;
   }
 }
+
+.hidden {
+  display: none;
+}
+
+.header {
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+}

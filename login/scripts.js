@@ -22,5 +22,6 @@ loginForm.addEventListener("submit", async (event) => {
   const data = await req.json();
   console.log(data);
 
+  localStorage.setItem("user", formData.get("user"));
   window.location.href = "../store";
 });
