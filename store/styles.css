@@ -1,0 +1,42 @@
+.header {
+}
+
+.main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+}
+
+.card__img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: contain;
+}
+
+.card__title {
+  font-size: large;
+}
+
+.card__price {
+  font-weight: bold;
+}
