@@ -23,17 +23,28 @@
     </header>
 
     <main class="main">
-      <div>
-        <input />
+      <div class="main__search">
+        <div class="input-container">
+          <label class="input-container__label" for="filter"
+            >Filtro de Búsqueda:</label
+          >
+          <input
+            class="input-container__input"
+            type="text"
+            name="filter"
+            id="filter"
+          />
+        </div>
+
         <button>Buscar</button>
       </div>
 
       <h1>Productos</h1>
       <nav class="categories">
-        <a href="?category=electronics">Electronics</a>
-        <a href="?category=jewelery">Jewelery</a>
-        <a href="?category=men's clothing">Men's Clothing</a>
-        <a href="?category=women's clothing">Women's Clothing</a>
+        <a class="btn" href="?category=electronics">Electronics</a>
+        <a class="btn" href="?category=jewelery">Jewelery</a>
+        <a class="btn" href="?category=men's clothing">Men's Clothing</a>
+        <a class="btn" href="?category=women's clothing">Women's Clothing</a>
       </nav>
 
       <div id="results" class="results"></div>

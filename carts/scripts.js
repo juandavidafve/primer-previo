@@ -14,21 +14,31 @@ function getUrlParams() {
 }
 
 async function getCart(id) {
-  const req = await fetch(`https://fakestoreapi.com/carts/id/${id}`);
+  const req = await fetch(`https://fakestoreapi.com/carts/${id}`);
   const cart = await req.json();
   const resultsElem = document.querySelector("#products");
 
-  resultsElem.innerHTML = cart.products
-    .map((product) => {
-      return `
+  const data = await Promise.all(
+    cart.products.map(async (product) => {
+      return await getProduct(product.productId, product.quantity);
+    })
+  );
+
+  resultsElem.innerHTML = data.join("");
+}
+
+async function getProduct(id, quantity) {
+  const req = await fetch(`https://fakestoreapi.com/products/${id}`);
+  const product = await req.json();
+
+  return `
         <tr>
+          <td>${product.title}</td>
+          <td>${quantity}</td>
           <td>${product.price}</td>
-          <td>${product.quantity}</td>
-          <td><a href="?id=${product.price}">Ver</a></td>
+          <td>${quantity * product.price}</td>
         </tr>
       `;
-    })
-    .join("");
 }
 
 async function getCarts() {
