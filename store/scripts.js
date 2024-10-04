@@ -32,7 +32,7 @@ async function getResults() {
           <div class="card">
             <img class="card__img" src="${product.image}">
             <h2 class="card__title">${product.title}</h2>
-            <p class="card__price">${product.price}</p>
+            <p class="card__price">$ ${product.price}</p>
             <button onclick="addProduct(${product.id})">Agregar</button>
           </div>
         `;

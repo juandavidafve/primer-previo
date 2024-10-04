@@ -3,8 +3,12 @@
   max-width: 540px;
   margin: 2rem;
   padding: 2rem;
-  background: var(--slate-100);
+  background: var(--shade-100);
   border-radius: 1rem;
+}
+
+.login__title {
+  margin: 0 0 2rem 0;
 }
 
 .login__form {

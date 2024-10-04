@@ -6,8 +6,8 @@ function logout() {
 function fillHeader() {
   const headerUserElem = document.querySelector(".header__user");
 
-  if (headerUserElem) {
-    headerUserElem.innerHTML = `Bienvenido ${localStorage.getItem("user")}`;
+  if (headerUserElem && localStorage.getItem("user")) {
+    headerUserElem.innerHTML = `Welcome ${localStorage.getItem("user")}`;
   }
 }
 

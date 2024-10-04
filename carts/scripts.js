@@ -13,48 +13,101 @@ function getUrlParams() {
   };
 }
 
-async function getCart(id) {
-  const req = await fetch(`https://fakestoreapi.com/carts/${id}`);
-  const cart = await req.json();
-  const resultsElem = document.querySelector("#products");
+async function printCartDetails(id) {
+  const cart = await getCartDetails(id);
 
-  const data = await Promise.all(
-    cart.products.map(async (product) => {
-      return await getProduct(product.productId, product.quantity);
+  const productsTable = document.querySelector("#cart-products");
+  productsTable.innerHTML = cart.products
+    .map((product) => {
+      return `
+      <tr>
+        <td>${product.title}</td>
+        <td>${product.quantity}</td>
+        <td>${product.price}</td>
+        <td>${product.subtotal}</td>
+      </tr>
+    `;
     })
-  );
+    .join("");
 
-  resultsElem.innerHTML = data.join("");
+  const cartDateElem = document.querySelector("#cart-date");
+  cartDateElem.value = new Date(cart.date).toLocaleDateString();
+
+  const cartNumberElem = document.querySelector("#cart-number");
+  cartNumberElem.value = cart.id;
+
+  const cartUserElem = document.querySelector("#cart-user");
+  cartUserElem.value = `${cart.user.name.firstname} ${cart.user.name.lastname}`;
+
+  const cartTotalElem = document.querySelector("#cart-total");
+  cartTotalElem.value = cart.total;
+
+  console.log(cart);
 }
 
-async function getProduct(id, quantity) {
+async function getProductDetails(id) {
   const req = await fetch(`https://fakestoreapi.com/products/${id}`);
   const product = await req.json();
 
-  return `
-        <tr>
-          <td>${product.title}</td>
-          <td>${quantity}</td>
-          <td>${product.price}</td>
-          <td>${quantity * product.price}</td>
-        </tr>
-      `;
+  return product;
 }
 
-async function getCarts() {
-  const resultsElem = document.querySelector("#carts");
+async function getUserDetails(id) {
+  const req = await fetch(`https://fakestoreapi.com/users/${id}`);
+  const user = await req.json();
+
+  return user;
+}
+
+async function getCartDetails(id) {
+  const req = await fetch(`https://fakestoreapi.com/carts/${id}`);
+  const cart = await req.json();
+
+  let total = 0;
+  const products = await Promise.all(
+    cart.products.map(async (product) => {
+      const productDetails = await getProductDetails(product.productId);
+      const subtotal = product.quantity * productDetails.price;
+      total += subtotal;
+
+      return {
+        quantity: product.quantity,
+        subtotal,
+        ...productDetails,
+      };
+    })
+  );
+
+  const user = await getUserDetails(cart.userId);
+
+  return {
+    ...cart,
+    user,
+    total,
+    products,
+  };
+}
+
+async function getAllCarts() {
   const req = await fetch("https://fakestoreapi.com/carts/");
   const data = await req.json();
 
-  resultsElem.innerHTML = data
+  return data;
+}
+
+async function printAllCarts() {
+  const resultsElem = document.querySelector("#carts");
+  const carts = await getAllCarts();
+
+  resultsElem.innerHTML = carts
     .map((cart) => {
       return `
-          <tr>
-            <td>${cart.id}</td>
-            <td>${cart.date}</td>
-            <td><a href="?id=${cart.id}">Ver</a></td>
-          </tr>
-        `;
+        <tr>
+          <td>${cart.id}</td>
+          <td>${new Date(cart.date).toLocaleDateString()}</td>
+          <td><a href="?id=${cart.id}">Ver</a></td>
+        </tr>
+      `;
     })
     .join("");
 }
@@ -64,9 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (id) {
     document.querySelector("#all-carts").classList.add("hidden");
-    getCart(id);
+    printCartDetails(id);
   } else {
     document.querySelector("#cart-details").classList.add("hidden");
-    getCarts();
+    printAllCarts();
   }
 });

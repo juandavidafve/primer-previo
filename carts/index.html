@@ -7,40 +7,90 @@
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="body--colored-shade">
     <header class="header">
-      <p class="header__logo">Tienda</p>
-      <nav class="header__links">
-        <span class="header__user">Bienvenido</span>
-        <a href="../carts"> Carrito </a>
-        <a onclick="logout()"> Salir </a>
+      <a href="../store" class="header__logo">Shop Online</a>
+      <nav class="header__nav">
+        <span class="header__user header__link"></span>
+        <a class="header__link" href="../carts">Carts</a>
+        <a class="header__link" onclick="logout()">Logout</a>
       </nav>
     </header>
 
     <main class="main">
       <div id="all-carts">
-        <h1>Relación de Pedidos</h1>
+        <h1>Orders</h1>
         <table>
           <thead>
-            <th>Número</th>
-            <th>Fecha de Solicitud</th>
-            <th>Acciones</th>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Actions</th>
           </thead>
           <tbody id="carts"></tbody>
         </table>
       </div>
 
-      <div id="cart-details">
-        <h1>Relación de Productos</h1>
-        <table>
-          <thead>
-            <th>Concepto</th>
-            <th>Cantidad</th>
-            <th>Valor</th>
-            <th>Total</th>
-          </thead>
-          <tbody id="products"></tbody>
-        </table>
+      <div id="cart-details" class="cart-details">
+        <div class="input-container cart-details__date">
+          <label for="cart-date" class="input-container__label">Date</label>
+          <input
+            type="text"
+            name="cart-date"
+            id="cart-date"
+            class="input-container__input"
+            value=""
+            disabled
+          />
+        </div>
+        <div class="input-container cart-details__number">
+          <label for="cart-number" class="input-container__label">
+            Order Id
+          </label>
+          <input
+            type="text"
+            name="cart-number"
+            id="cart-number"
+            class="input-container__input"
+            value=""
+            disabled
+          />
+        </div>
+        <div class="input-container cart-details__client">
+          <label for="cart-user" class="input-container__label"> Client </label>
+          <input
+            type="text"
+            name="cart-user"
+            id="cart-user"
+            class="input-container__input"
+            value=""
+            disabled
+          />
+        </div>
+
+        <div class="cart-details__products">
+          <h2 class="cart-details__products__title">Products</h2>
+          <table>
+            <thead>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Subtotal</th>
+            </thead>
+            <tbody id="cart-products"></tbody>
+          </table>
+        </div>
+
+        <div class="input-container cart-details__total">
+          <label for="cart-total" class="input-container__label"> Total </label>
+          <input
+            type="text"
+            name="cart-total"
+            id="cart-total"
+            class="input-container__input"
+            value=""
+            disabled
+          />
+        </div>
       </div>
     </main>
     <script src="../scripts.js"></script>
