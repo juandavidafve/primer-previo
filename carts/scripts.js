@@ -89,7 +89,13 @@ async function getCartDetails(id) {
 }
 
 async function getAllCarts() {
-  const req = await fetch("https://fakestoreapi.com/carts/");
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    return [];
+  }
+
+  const req = await fetch(`https://fakestoreapi.com/carts/user/${userId}`);
   const data = await req.json();
 
   return data;

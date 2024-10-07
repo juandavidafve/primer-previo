@@ -20,8 +20,14 @@ loginForm.addEventListener("submit", async (event) => {
   }
 
   const data = await req.json();
-  console.log(data);
 
-  localStorage.setItem("user", formData.get("user"));
+  const usersReq = await fetch("https://fakestoreapi.com/users");
+  const users = await usersReq.json();
+
+  const user = await users.find((usr) => {
+    return usr.username == formData.get("user");
+  });
+
+  localStorage.setItem("userId", user.id);
   window.location.href = "../store";
 });
